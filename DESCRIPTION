@@ -1,0 +1,36 @@
+Package: supplynet
+Type: Package
+Title: Supply network design and robustness assessment tools
+Version: 0.1.0
+Author: Milo Monnier
+Maintainer: Milo Monnier <milo.monnier@inrae.fr>
+Authors@R: as.person(c(
+    "Milo Monnier <milo.monnier@inrae.fr> [aut, cre]", 
+    "Maxime Lenormand <maxime.lenormand@inrae.fr> [ctb]",
+    "Dino Ienco <dino.enco@inrae.fr> [ctb]"
+  ))
+Description: An extension of igraph package to supply networks. Supply networks
+    are Directed Acyclic Graphs (DAG) composed of sources ands sinks, the 
+    starts and the ends of supply chains. Includes function to assess diverse 
+    robustness and efficiency metrics of supply networks. Implements an
+    extension to spatial dimension with sf package.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Imports: 
+    fields,
+    igraph,
+    methods,
+    Matrix,
+    raster,
+    reshape2,
+    Rfast,
+    sf,
+    sp,
+    stats
+Suggests: 
+    DescTools,
+    igraphdata,
+    spData,
+    
