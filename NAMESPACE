@@ -3,6 +3,7 @@
 export(AVG_DEF)
 export(SAR)
 export(addRandomEdges)
+export(adjustAvgDegree)
 export(aggregateVertices)
 export(applyCascadingFailures)
 export(createRaster)
