@@ -9,7 +9,7 @@ AVG_DEF(g, decr.FUN = function(x) 1/x)
 \arguments{
 \item{g}{An igraph object; the supply network.}
 
-\item{decr.FUN}{functions; how the weight of a supplier in the metric depend
+\item{decr.FUN}{function; how the weight of a supplier in the metric depend
 decrease with its rank according to its topological distance from target node.}
 }
 \value{
@@ -42,5 +42,6 @@ plot(N, eff)
 \references{
 Zhao, K., Kumar, A., & Yen, J. (2011). Achieving High Robustness in Supply
 Distribution Networks by Rewiring. IEEE Transactions on Engineering Management,
-58(2), 347–362. https://doi.org/10.1109/TEM.2010.2095503
+58(2), 347–362.
+https://doi.org/10.1109/TEM.2010.2095503
 }

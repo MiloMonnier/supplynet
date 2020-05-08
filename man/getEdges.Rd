@@ -2,7 +2,7 @@
 % Please edit documentation in R/getEdges.R
 \name{getEdges}
 \alias{getEdges}
-\title{Choose edges from an edge sequence}
+\title{Get edges from a graph}
 \usage{
 getEdges(
   g,
@@ -18,11 +18,12 @@ getEdges(
 \arguments{
 \item{g}{An igraph object.}
 
-\item{n}{Number of edges returned. Default is 1.}
+\item{n}{numeric; number of edges returned (default: 1).}
 
-\item{es}{The edges set among which to choose. Default is all graph edges.}
+\item{es}{igraph.es; edges sequence among which to choose (default: all edges).}
 
-\item{mode}{Method used to choose the edge(s): "random" (default), "targeted"
+\item{mode}{character; either 'random' or 'targeted'. Method used to choose
+the \code{n} edge(s) (default: 'random').
 (e.g. take the n more central edges), or "proba" (e.g. more central and longest
 spatial-dist edges are more likely to be chosen). *.w arguments influence targetd
 and proba modes.}
@@ -30,22 +31,23 @@ and proba modes.}
 \item{ct.ind.FUN}{function used to compute centrality index of the edge sequence.
 Used only if ci.w > 0. Default is \code{\link{edge_betweenness}}.}
 
-\item{ct.ind.w}{exponent weighting edge centrality index in probabilities mix.
-If negative, less central edges are more likely to be chosen. Default is 1.}
+\item{ct.ind.w}{numeric; exponent weighting edge centrality index in probabilities.
+If negative, less central edges are more likely to be chosen (default: 1).}
 
-\item{sp.dist.attr}{Name of edge attribute containing spatial distance.
-If negative, shortest-distance edges are more likely to be chosen. Default is 0.}
+\item{sp.dist.attr}{character; name of the edge attribute containing spatial
+distance (default: 'dist').}
 
-\item{sp.dist.w}{Eponent weighting spatial distance in probabilities mix.}
+\item{sp.dist.w}{numeric; exponent weighting spatial distance in probabilities.
+If negative, shortest-distance edges are more likely to be chosen (default: 0).}
 }
 \value{
-An igraph.es edge or edges sequence.
+An igraph.es edge(s) sequence of length \code{n}.
 }
 \description{
-Selecting graph edges randomly, or according to probabilities. Probabilities
-can depend on 2 criterias: centrality index (betweenness, sum of extremities
+Select graph edges randomly, or according to probabilities, which can depend
+on 2 criterias: centrality index (betweenness, sum of extremities
 degree, etc) and/or spatial distance. These are used only of their weight > 0.
-By default, spatial distance is ignored (weight exponent = 0).
+By default, spatial distance is ignored, with an exponent of 0.
 }
 \examples{
 library(igraph)

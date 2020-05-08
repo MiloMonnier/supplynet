@@ -36,6 +36,9 @@ generateSupplyNet = function(P=67, I=18, D=70, E=228)
   e = cbind(from, to)
   # Build graph
   g = graph_from_data_frame(e, directed=TRUE, v)
-  g = g - V(g)[!degree(g)] # Remove isolated vertices
+  # Clean is from isolated vertices and loops
+  g = g - V(g)[!degree(g)]
+  g = delete_edges(g, E(g)[which_loop(g)])
+  g = delete_edges(g, E(g)[which_multiple(g)])
 }
 
