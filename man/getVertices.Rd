@@ -68,4 +68,5 @@ v==V(g)[which.max(betweenness(g))]
 ## Get vertex with highest degree
 v = getVertices(g, mode="targeted", ct.ind.FUN=degree)
 v==V(g)[which.max(degree(g))]
+
 }

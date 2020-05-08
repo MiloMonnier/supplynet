@@ -41,8 +41,7 @@ floydAlgo = function(x)
     }
     diag(x) = 0 # Eliminate loops if any
   }
-  m = x
-  # Compute Floyd-Warshall (or Johnson?) algorithm
+  # Compute Floyd-Warshall (-Johnson) algorithm
   x[x==0] = Inf
   mfloyd = Rfast::floyd(x)
   # Reset adjacency matrix attributes

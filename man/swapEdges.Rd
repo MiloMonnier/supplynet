@@ -15,19 +15,19 @@ swapEdges(
 \arguments{
 \item{g}{An igraph object}
 
-\item{es}{igraph.es edge sequence among which to choose edges to swap.
-Default is all the graph edges.}
+\item{es}{igraph.es; edge sequence among which to choose edges to swap.
+(default: all edges).}
 
-\item{e1}{one imposed edge to swap with another. Default is NULL.}
+\item{e1}{igraph.es; one of the two swapped edges can be imposed (default: NULL).}
 
-\item{edges.types}{Of what type must be the two swapped edges ? Can be "random",
-"same" or "different". Default is "random". Require an E(g)$type attribute.}
+\item{edges.types}{character string; either 'random', 'same' or 'different':
+of what type must be edges swapped. Requir E(g)$type attribute (default: 'random').}
 
-\item{multi.edges}{whether or no multiple edges creation is allowed during
-the process. Default is FALSE.}
+\item{multi.edges}{boolean; whether or not multiple edges creation is allowed
+(default: FALSE).}
 }
 \value{
-an igraph object with 2 swapped edges.
+An igraph object.
 }
 \description{
 Extends \code{\link[igraph]{rewire}} used with \code{\link[igraph]{keeping_degseq}}

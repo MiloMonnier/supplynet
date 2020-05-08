@@ -7,15 +7,15 @@
 #' Preserving Randomization (DPR). One of the two edges can be imposed (e1).
 #'
 #' @param g An igraph object
-#' @param es igraph.es edge sequence among which to choose edges to swap.
-#' Default is all the graph edges.
-#' @param e1 one imposed edge to swap with another. Default is NULL.
-#' @param edges.types Of what type must be the two swapped edges ? Can be "random",
-#' "same" or "different". Default is "random". Require an E(g)$type attribute.
-#' @param multi.edges whether or no multiple edges creation is allowed during
-#' the process. Default is FALSE.
+#' @param es igraph.es; edge sequence among which to choose edges to swap.
+#' (default: all edges).
+#' @param e1 igraph.es; one of the two swapped edges can be imposed (default: NULL).
+#' @param edges.types character string; either 'random', 'same' or 'different':
+#' of what type must be edges swapped. Requir E(g)$type attribute (default: 'random').
+#' @param multi.edges boolean; whether or not multiple edges creation is allowed
+#' (default: FALSE).
 #'
-#' @return an igraph object with 2 swapped edges.
+#' @return An igraph object.
 #' @export
 #'
 #' @examples
@@ -96,10 +96,3 @@ swapEdges = function(g,
   g = add_edges(g, c(e3, e4))
 }
 # TODO Add inter-inter edges ceil ?
-
-# load("outputs/3-network_spatial_cleaned.RData")
-# es          = E(g)
-# e1          = NULL
-# swap.types  = "same"
-# edges.type  = E(g)$type
-# multi.edges = FALSE

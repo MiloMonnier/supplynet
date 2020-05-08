@@ -44,7 +44,7 @@
 #' ## Get vertex with highest degree
 #' v = getVertices(g, mode="targeted", ct.ind.FUN=degree)
 #' v==V(g)[which.max(degree(g))]
-
+#'
 getVertices = function(g,
                        n            = 1,
                        vs           = V(g),
