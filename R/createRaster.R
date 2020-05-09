@@ -1,14 +1,13 @@
 
-# CREATE RASTER -----------------------------------------------------------
-
-#' Creating customized rasters
+#' Create fitted rasters
 #'
-#' Creates a RasterLayer class object covering a given sf object extent.
-#' Resolution (scale) is passed in kilometers. Raster pixels can be fitted on
-#' a reference point passed with xref and yref arguments.
+#' Creates a raster covering a spatial object \code{extent}.
+#' Resolution \code{scale} is passed in the units of \code{extent} object.
+#' Raster pixels can be fitted on a reference point passed with
+#' \code{xref} and \code{yref}.
 #'
 #' @param extent sf or sp; spatial object defining the extent covered by raster.
-#' Spatial obhect can be points, lines or polygons.
+#' Can be points, lines or polygons.
 #' @param xref numeric; x coordinate of reference pixel bottomleft corner.
 #' If NULL (default), the center of the extent is taken.
 #' @param yref numeric; y coordinate of reference pixel bottomleft corner.
