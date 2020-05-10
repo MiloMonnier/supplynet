@@ -57,6 +57,8 @@ efficiencyRe = function(g)
   reachability(g) / ST_avg_deg
 }
 
+# TODO Check
+# https://github.com/cwatson/brainGraph/blob/master/R/graph_efficiency.R
 
 #' Latora and Marchiori efficiency
 #'
@@ -157,7 +159,6 @@ efficiencyLM = function(g)
 #' Zhao, K., Kumar, A., & Yen, J. (2011). Achieving High Robustness in Supply
 #' Distribution Networks by Rewiring. IEEE Transactions on Engineering Management,
 #' 58(2), 347–362.
-#' https://doi.org/10.1109/TEM.2010.2095503
 #'
 #' @param g An igraph object; the supply network.
 #' @param decr.FUN function; how the weight of a supplier in the metric depend
@@ -183,8 +184,8 @@ AVG_DEF = function(g,
 {
   if (!is(decr.FUN, "function"))
     stop("decr.FUN require a function")
-  # A is adjacency matric
-  A = g[]
+  # A is adjacency matrix
+  A = as_adj(g)
   Af = A
   Af[Af==0] = Inf
   # L is path length matrix

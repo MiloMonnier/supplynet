@@ -41,5 +41,6 @@ generateSupplyNet = function(P=67, I=18, D=70, E=228)
   g = delete_edges(g, E(g)[which_loop(g)])
   g = delete_edges(g, E(g)[which_multiple(g)])
   g = updateGraphAttributes(g)
+  return(g)
 }
 

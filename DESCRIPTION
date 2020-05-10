@@ -19,7 +19,9 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
 Imports: fields, igraph, Matrix, methods, raster, reshape2, Rfast, sf, sp,
-        stats
+        stats, spex, stars
 Suggests: DescTools, igraphdata, spData,
 NeedsCompilation: no
 Packaged: 2020-05-07 07:35:27 UTC; milo
+Depends: 
+    R (>= 2.10)
