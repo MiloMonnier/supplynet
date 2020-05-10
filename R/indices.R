@@ -233,3 +233,83 @@ dagDensity = function(g)
   maxE = P*I + P*D + I*D + I*(I-1)
   length(E(g)) / maxE
 }
+
+
+
+# SUPPLY CHAINS -----------------------------------------------------------
+
+#' Overall number of supply chains in a supply network
+#'
+#' A supply chain is a path starting from a producer and ending to a distributor.
+#' A supply network counts as many supply chains as connected producer-distributors
+#' pairs.
+#'
+#' @param g igraph object; the supply network.
+#'
+#' @return a positive integer.
+#' @export
+#'
+#' @examples
+#' library(igraph)
+#' g = generateSupplyNet()
+#' nbSupplyChains(g)
+#'
+nbSupplyChains = function(g)
+{
+  # Compute shortest paths length matrix between producers and distributors
+  m = floydAlgo(g)
+  vP = V(g)[V(g)$type=="P"]$name
+  vD = V(g)[V(g)$type=="D"]$name
+  m = m[vP, vD, drop=FALSE]
+  length(m[m >= 1])
+}
+
+
+#' Short supply chains edges rate
+#'
+#' Short supply chains are edges linking directly producers to distributors.
+#' This function compute the rate of short SCs edges in the overall edges number.
+#'
+#' @param g an igraph object; the supply network.
+#'
+#' @return a numeric between 0 and 1.
+#' @export
+#'
+#' @examples
+#' library(igraph)
+#' g = generateSupplyNet()
+#' shortEdgesRate(g)
+#'
+shortEdgesRate = function(g)
+{
+  nShortE = length(E(g)[E(g)$type=="PD"])
+  nShortE / length(E(g))
+}
+
+
+#' Average Supply-Path Length (SPL)
+#'
+#' A Supply-Path is a synonym of Supply Chain. This index is equal to the average
+#' of the shortest path length from producers to distributors.
+#'
+#' @param g an igraph object; the supply network.
+#'
+#' @return a positive numeric.
+#' @export
+#'
+#' @examples
+#' library(igraph)
+#' g = generateSupplyNet()
+#' avgSPL(g)
+#'
+avgSPL = function(g)
+{
+  m = floydAlgo(g)
+  vP = V(g)[V(g)$type=="P"]$name
+  vD = V(g)[V(g)$type=="D"]$name
+  m = m[vP, vD, drop=FALSE]
+  mean(m[m>=1])
+}
+
+# WARNING
+# Inverse of avgSPL is different from the average of inverses SPL
