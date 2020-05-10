@@ -70,9 +70,7 @@ rewireEdge = function(g,
   # Replace the old by the new edge
   g = delete_edges(g, edge)
   g = add_edges(g, new_e)
-  # name = paste(new_e, collapse="_")
-  # type = paste0(V(g)[new_e[1]]$type, V(g)[new_e[2]]$type)
-  # attr = list(name=name, type=type)
+  g = updateGraphAttributes(g)
 }
 
 # e_sc    = ifelse(e_type=="PD", "short","long")
@@ -171,7 +169,7 @@ swapEdges = function(g,
   }
   # Choose random edge e2 into the remaining edge set
   if (!length(es)) {
-    message(paste("Swap of edges of", edges.types, "types failed: returned g"))
+    message(paste("Impossible to swap of edges of", edges.types, "types"))
     return(g)
   }
   e2 = sample(es, 1)
@@ -181,6 +179,7 @@ swapEdges = function(g,
   e3 = c(e1ij[1], e2ij[2])
   e4 = c(e2ij[1], e1ij[2])
   g = add_edges(g, c(e3, e4))
+  g = updateGraphAttributes(g)
 }
 # TODO Add inter-inter edges ceil ?
 
@@ -263,7 +262,7 @@ addRandomEdges = function(g,
   if (length(E(g)[E(g)$type=="II"]) >= iie.ceil)
     df = df[!(df$from %in% v_inter  &  df$to %in% v_inter), ]
   if (!nrow(df)) {
-    message("addRandomEdges() - Cancel: Impossible to fill graph with more edges")
+    message("Impossible to add edges anymore")
     return(g)
   }
   if (nrow(df) < n)
@@ -272,6 +271,7 @@ addRandomEdges = function(g,
   m = df[sample(nrow(df), n), c("from","to")]
   new_e = as.vector(t(m))
   g = add_edges(g, new_e)
+  g = updateGraphAttributes(g)
 }
 
 
@@ -339,7 +339,7 @@ deleteRandomEdges = function(g,
     es = es[outdegi>1  &  indegj>1]
   }
   if (!length(es)) {
-    warning("Impossible to delete anymore edges")
+    message("Impossible to delete anymore edges")
     return(g)
   }
   # Don't delete bridges edges
@@ -348,7 +348,7 @@ deleteRandomEdges = function(g,
     es = es[!es$name %in% bridges$name]
   }
   if (!length(es)) {
-    warning("Impossible to delete anymore edges")
+    message("Impossible to delete anymore edges")
     return(g)
   }
   # Choose an edge among the edge set left and delete it
@@ -405,8 +405,8 @@ adjustAvgDegree = function(g,
 #'   customers of an intermediairy node, i.e. its 'supply transitivity', reach a
 #'   certain level, it is removed. Allows to favor the emergence of short supply
 #'   chains into a rewiring process (default: Inf).}
-#'   \item{degree}{if the degree of a node falls below a threshold, it becames
-#'   unimportant, and is removed. Allows to favor the emergence of hubs
+#'   \item{degree}{if the degree of a node falls and is equal or lower to this
+#'   threshold, it is removed. Allows to favor the emergence of hubs
 #'   (default: Inf).}
 #' }
 #'
@@ -504,15 +504,19 @@ lengthenShortEdge = function(g)
   g = updateGraphAttributes(g)
   # Get a random P-D edge if any
   e = E(g)[E(g)$type=="PD"]
-  if (!length(e))
+  if (!length(e)) {
+    message("No more short supply chains to lengthen")
     return(g)
+  }
   e  = sample(e, 1)
   vp = ends(g, e)[1]
   vd = ends(g, e)[2]
   # Get a random intermediary if any, and skip otherwise
   inter = V(g)[V(g)$type=="I"]
-  if (!length(inter))
+  if (!length(inter)) {
+    message("No more intermediaries nodes")
     return(g)
+  }
   vi = sample(names(inter), 1)
   # Replace short PD edge by two PI-ID edges
   g = delete_edges(g, e)
