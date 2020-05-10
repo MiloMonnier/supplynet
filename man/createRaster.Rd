@@ -2,13 +2,13 @@
 % Please edit documentation in R/createRaster.R
 \name{createRaster}
 \alias{createRaster}
-\title{Creating customized rasters}
+\title{Create fitted rasters}
 \usage{
 createRaster(extent, xref = NULL, yref = NULL, scale = 1)
 }
 \arguments{
 \item{extent}{sf or sp; spatial object defining the extent covered by raster.
-Spatial obhect can be points, lines or polygons.}
+Can be points, lines or polygons.}
 
 \item{xref}{numeric; x coordinate of reference pixel bottomleft corner.
 If NULL (default), the center of the extent is taken.}
@@ -24,9 +24,10 @@ it is in decimal degrees.}
 a RasterLayer object with same CRS than \code{extent}.
 }
 \description{
-Creates a RasterLayer class object covering a given sf object extent.
-Resolution (scale) is passed in kilometers. Raster pixels can be fitted on
-a reference point passed with xref and yref arguments.
+Creates a raster covering a spatial object \code{extent}.
+Resolution \code{scale} is passed in the units of \code{extent} object.
+Raster pixels can be fitted on a reference point passed with
+\code{xref} and \code{yref}.
 }
 \examples{
 \donttest{

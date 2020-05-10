@@ -43,5 +43,4 @@ plot(N, eff)
 Zhao, K., Kumar, A., & Yen, J. (2011). Achieving High Robustness in Supply
 Distribution Networks by Rewiring. IEEE Transactions on Engineering Management,
 58(2), 347–362.
-https://doi.org/10.1109/TEM.2010.2095503
 }
