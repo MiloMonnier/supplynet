@@ -14,7 +14,7 @@ Description: An extension of igraph package to supply networks. Supply networks
     starts and the ends of supply chains. Includes function to assess diverse 
     robustness and efficiency metrics of supply networks. Implements an
     extension to spatial dimension with sf package.
-License: GPL-3
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
