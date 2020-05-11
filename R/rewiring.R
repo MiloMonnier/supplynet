@@ -18,33 +18,32 @@
 #'
 #' @examples
 #' library(igraph)
-#' g = erdos.renyi.game(100, 120, 'gnm')
+#' g = generateSupplyNet()
 #' for (i in 1:100)
 #'   g = rewireEdge(g)
 #'
 rewireEdge = function(g,
                       edge        = sample(E(g), 1),
-                      what        = c("origin", "destination"),
-                      vs           = NULL,
+                      what        = c("origin","destination"),
+                      vs          = V(g),
                       multi.edges = FALSE,
                       ...)
 {
+  if (is.null(V(g)$name))
+    V(g)$name  = 1:length(V(g))
   if (!is(edge,"igraph.es") || length(edge) != 1)
     stop("edge require an igraph.es class object of length 1")
   if (!is.null(vs) && !is(vs,"igraph.vs"))
     stop("vs require a igraph.vs class object")
   what = sample(what, 1)
   # Get extremities of the edge to rewire
-  vi = ends(g, edge, names=TRUE)[, 1][1] # If any double egdes, keep only 1st
+  vi = ends(g, edge, names=TRUE)[, 1][1]
   vj = ends(g, edge, names=TRUE)[, 2][1]
   # Filter potential new origin or destinations
-  if (is.null(vs)) {
-    vs = V(g)
-    if (what=="origin") {
-      vs = vs[vs$type %in% c("P","I")]
-    } else if (what=="destination") {
-      vs = vs[vs$type %in% c("I","D")]
-    }
+  if (what=="origin") {
+    vs = vs[vs$type %in% c("P","I")]
+  } else if (what=="destination") {
+    vs = vs[vs$type %in% c("I","D")]
   }
   # Avoid loops and double edges if wanted
   vs = vs[!vs$name %in% c(vi, vj)]
@@ -60,7 +59,7 @@ rewireEdge = function(g,
     message("No vertices towards which to rewire")
     return(g)
   }
-  vk = getVertices(g, n=1, vs=vs, ...)
+  vk = getVertices(g, n=1, vs=vs, ...)$name
   # Generate new edge
   if (what=="origin") {
     new_e = c(vk, vj)
@@ -68,14 +67,11 @@ rewireEdge = function(g,
     new_e = c(vi, vk)
   }
   # Replace the old by the new edge
-  g = delete_edges(g, edge)
-  g = add_edges(g, new_e)
-  g = updateGraphAttributes(g)
+  g = delete_edges(g, edge) %>%
+    add_edges(new_e) %>%
+    updateGraphAttributes()
 }
 
-# e_sc    = ifelse(e_type=="PD", "short","long")
-# g = add_edges(g, new_e)
-# g = add_edges(g, new_e, attr=list(name=new_e_name, type=new_e_type))
 # Avoid to create forbidden edges: double edges or excessive II edges
 # if (!is.null(iie.ceil)  &&  e_type=="II"  &&  length(V(g)[type=="II"]) >= iie.ceil) {
 #   if (verbose)
@@ -452,14 +448,14 @@ deleteIntermediaries = function(g,
   }
   # Delete intermediaries with a supply transitivity index below the threshold
   if (tr <= 1)
-    v = v[supplyTransitivity(g, v) >= tr]
+    v = v[supplyTransitivity(g, v) > tr]
   if (!length(v)) {
     message("No intermediaries can be deleted")
     return(g)
   }
   # Delete intermediaries with a degree under the threshold
   if (is.finite(deg))
-    v = v[degree(g, v) < deg]
+    v = v[degree(g, v) <= deg]
   if (!length(v)) {
     message("No intermediaries can be deleted")
     return(g)
@@ -478,6 +474,9 @@ deleteIntermediaries = function(g,
     g = delete_vertices(g, sample(v, 1))
   }
 }
+# load("~/Dropbox/food_circuits/data/3-network_spatial_cleaned.RData")
+# g = deleteIntermediaries(g, tr=0.01)
+# vcount(g)
 
 
 #' Turn a short supply chain into a long supply chain

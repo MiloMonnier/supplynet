@@ -8,7 +8,7 @@ rewireEdge(
   g,
   edge = sample(E(g), 1),
   what = c("origin", "destination"),
-  vs = NULL,
+  vs = V(g),
   multi.edges = FALSE,
   ...
 )
@@ -36,7 +36,7 @@ Preferential attachment can be included by passing some paramters to ...
 }
 \examples{
 library(igraph)
-g = erdos.renyi.game(100, 120, 'gnm')
+g = generateSupplyNet()
 for (i in 1:100)
   g = rewireEdge(g)
 
