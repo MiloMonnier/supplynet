@@ -60,6 +60,8 @@ efficiencyRe = function(g)
 # TODO Check
 # https://github.com/cwatson/brainGraph/blob/master/R/graph_efficiency.R
 
+# TODO Rather than PD average degree, we can use the median degree ?
+
 #' Latora and Marchiori efficiency
 #'
 #' Adapted

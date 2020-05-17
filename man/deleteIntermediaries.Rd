@@ -28,8 +28,8 @@ considered as no more important. Deletion can be based on 2 criterias:
   customers of an intermediairy node, i.e. its 'supply transitivity', reach a
   certain level, it is removed. Allows to favor the emergence of short supply
   chains into a rewiring process (default: Inf).}
-  \item{degree}{if the degree of a node falls below a threshold, it becames
-  unimportant, and is removed. Allows to favor the emergence of hubs
+  \item{degree}{if the degree of a node falls and is equal or lower to this
+  threshold, it is removed. Allows to favor the emergence of hubs
   (default: Inf).}
 }
 }
