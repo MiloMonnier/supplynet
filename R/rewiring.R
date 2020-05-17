@@ -171,11 +171,16 @@ swapEdges = function(g,
   e2 = sample(es, 1)
   e2ij = ends(g, e2)
   # Swap e1 & e2: delete it and replace by e3 & e4
-  g = delete_edges(g, c(e1, e2))
   e3 = c(e1ij[1], e2ij[2])
   e4 = c(e2ij[1], e1ij[2])
-  g = add_edges(g, c(e3, e4))
-  g = updateGraphAttributes(g)
+  g = delete_edges(g, c(e1, e2)) %>%
+    add_edges(c(e3, e4)) %>%
+    updateGraphAttributes()
+  # g = delete_edges(g, c(e1, e2))
+  # e3 = c(e1ij[1], e2ij[2])
+  # e4 = c(e2ij[1], e1ij[2])
+  # g = add_edges(g,  c(e1ij[1], e2ij[2],  c(e1ij[1], e2ij[2])))
+  # g = updateGraphAttributes(g)
 }
 # TODO Add inter-inter edges ceil ?
 
@@ -442,31 +447,25 @@ deleteIntermediaries = function(g,
   # Get intermediaires if any
   v = V(g)[degree(g, mode='in') & degree(g, mode='out')]
   # v = V(g)[type=="I"]
-  if (!length(v)) {
-    message("No intermediaries in the graph")
+  if (!length(v))
     return(g)
-  }
+  # message("No intermediaries in the graph")
   # Delete intermediaries with a supply transitivity index below the threshold
   if (tr <= 1)
     v = v[supplyTransitivity(g, v) > tr]
-  if (!length(v)) {
-    message("No intermediaries can be deleted")
+  if (!length(v))
     return(g)
-  }
   # Delete intermediaries with a degree under the threshold
   if (is.finite(deg))
     v = v[degree(g, v) <= deg]
-  if (!length(v)) {
-    message("No intermediaries can be deleted")
+  if (!length(v))
     return(g)
-  }
   # The deletion should not isolate another vertices
   if (!cuts)
     v = v[!v %in% articulation_points(g)]
-  if (!length(v)) {
-    message("No intermediaries can be deleted without cutting the graph")
+  if (!length(v))
     return(g)
-  }
+  # message("No intermediaries can be deleted without cutting the graph")
   # Delete 1 intermediary from the graph only
   if (length(v)==1) {
     g = delete_vertices(g, v)
@@ -518,13 +517,46 @@ lengthenShortEdge = function(g)
   }
   vi = sample(names(inter), 1)
   # Replace short PD edge by two PI-ID edges
-  g = delete_edges(g, e)
-  e_pi = c(vp, vi)
-  e_id = c(vi, vd)
-  g = add_edges(g, c(e_pi, e_id))
-  g = updateGraphAttributes(g)
+  g = delete_edges(g, e) %>%
+    add_edges(c(vp,vi, vi,vd)) %>%
+    updateGraphAttributes()
+  # g = delete_edges(g, e)
+  # e_pi = c(vp, vi)
+  # e_id = c(vi, vd)
+  # g = add_edges(g, c(e_pi, e_id))
+  # g = updateGraphAttributes(g)
 }
 
+
+#' Delete multiple edges of a graph
+#'
+#' Delete multiple edges in the graph if any, and print message if wanted.
+#' Messages can be useful to monitor an iterative rewiring process for example.
+#'
+#' @param g An igraph object
+#' @param verbose Wether or not to print a message if multiple edges are deleted.
+#' (default: FALSE).
+#'
+#' @return An igraph object without any multiple edges.
+#' @export
+#'
+#' @importFrom igraph which_multiple
+#' @importFrom igraph delete_edges
+#' @examples
+#' library(igraph)
+#' g = generateSupplyNet()
+#' vij = sample(V(g), 2)
+#' g = add_edges(g, c(vij, vij))
+#' g = deleteMultipleEdges(g, verbose=TRUE)
+#'
+deleteMultipleEdges = function(g,
+                               verbose = FALSE)
+{
+  multi_e = E(g)[which_multiple(g, E(g))]
+  if (length(multi_e) & verbose)
+    message(paste("deleteMultipleEdges() - Deleted ", length(multi_e), "edge(s)"))
+  g = delete_edges(g, multi_e) # If 0, nothing happen
+}
 
 
 #' Update vertices and attributes of a graph
