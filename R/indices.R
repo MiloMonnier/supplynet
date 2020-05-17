@@ -234,8 +234,6 @@ dagDensity = function(g)
   length(E(g)) / maxE
 }
 
-
-
 # SUPPLY CHAINS -----------------------------------------------------------
 
 #' Overall number of supply chains in a supply network
@@ -311,5 +309,29 @@ avgSPL = function(g)
   mean(m[m>=1])
 }
 
-# WARNING
-# Inverse of avgSPL is different from the average of inverses SPL
+
+#' Average inverse supply path length
+#'
+#' First, all shortest path lengths between producers and distributors are
+#' computed. Then, their inverse are computed. This index returns the mean of
+#' the inverses paths length (and not the inverse of the avgSPL).
+#'
+#' @param g an igraph object; the supply network.
+#'
+#' @return a numeric between 0 and 1. 1 corresponds to all short-circuits network.
+#' @export
+#'
+#' @examples
+#' library(igraph)
+#' g = generateSupplyNet()
+#' avgInvSPL(g)
+#'
+avgInvSPL = function(g)
+{
+  m = floydAlgo(g)
+  vP = V(g)[V(g)$type=="P"]$name
+  vD = V(g)[V(g)$type=="D"]$name
+  m = m[vP, vD, drop=FALSE]
+  m = 1/m
+  mean(m * is.finite(m), na.rm = TRUE)
+}
