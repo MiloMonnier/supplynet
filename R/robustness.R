@@ -217,7 +217,7 @@ robustnessGraph = function(g,
     if (metric==0 || i>=niter)
       break
   }
-  mean(metric_c)
+  return(metric_c)
 }
 
 
@@ -337,6 +337,6 @@ robustnessGraphAgg = function(g,
     if (metric==0 || i==niter || !length(ve2del_left))
       break
   }
-  mean(metric_c)
+  return(metric_c)
 }
 
