@@ -16,6 +16,7 @@
 #' @export
 #'
 #' @importFrom igraph delete_vertices
+#'
 #' @examples
 #' ## Generate a theoretical supply network, define producers (P), inter. (I)
 #' ## and distributors (D) vertices.
@@ -67,6 +68,7 @@ applyCascadingFailures = function(g)
 #'
 #' @importFrom igraph V
 #' @importFrom igraph degree
+#'
 #' @examples
 #' ## Generate a theoretical supply network, define producers (P), intermediaries (I)
 #' ## and distributors (D) vertices.
@@ -138,10 +140,8 @@ SAR = function(g0, g)
 #' @return numeric between 0 and 1. The mean of \code{metric.FUN} over iterations.
 #' @export
 #'
-#' @importFrom igraph V
-#' @importFrom igraph E
-#' @importFrom igraph delete_vertices
-#' @importFrom igraph delete_edges
+#' @import igraph
+#'
 #' @examples
 #' ## Generate a theoretical supply network, define producers (P),
 #' ## Intermediaries (I) and distributors (D) vertices.

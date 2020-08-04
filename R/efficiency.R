@@ -169,9 +169,12 @@ efficiencyLM = function(g)
 #' @return A positive numeric.
 #' @export
 #'
+#' @importFrom methods is
+#' @importFrom igraph as_adj
 #' @importFrom Matrix rowSums
 #' @importFrom Matrix colSums
 #' @importFrom Rfast floyd
+#'
 #' @examples
 #' library(igraph)
 #' g = generateSupplyNet()
