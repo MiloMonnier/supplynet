@@ -47,16 +47,16 @@ V(g)$color = c("green","red","yellow")[factor(V(g)$type, levels=c("P","I","D"))]
 plot(g)
 ## Swap edges to conserve supply from P to D.
 for (i in 1:100) {
-  i = ends(g, E(g), names=FALSE)[,1]
-  j = ends(g, E(g), names=FALSE)[,2]
-  E(g)$type = paste0(V(g)[i]$type, V(g)[j]$type)
-  g = swapEdges(g, edges.types="diff")
-  if (length(E(g)[which_multiple(g, E(g))]))
-     stop("Multiedges")
-  if (length(E(g)[which_loop(g, E(g))]))
-     stop("Loops")
-  if (length(V(g)[degree(g)==0]))
-     stop("Isolated vertex")
+ i = ends(g, E(g), names=FALSE)[,1]
+ j = ends(g, E(g), names=FALSE)[,2]
+ E(g)$type = paste0(V(g)[i]$type, V(g)[j]$type)
+ g = swapEdges(g, edges.types="diff")
+ if (length(E(g)[which_multiple(g, E(g))]))
+    stop("Multiedges")
+ if (length(E(g)[which_loop(g, E(g))]))
+    stop("Loops")
+ if (length(V(g)[degree(g)==0]))
+    stop("Isolated vertex")
 }
 plot(g)
 
