@@ -12,11 +12,9 @@
 #' @return An igraph object.
 #' @export
 #'
-#' @importFrom igraph V
-#' @importFrom igraph E
-#' @importFrom igraph get.data.frame
-#' @importFrom igraph graph_from_data_frame
+#' @import igraph
 #' @importFrom stats aggregate
+#'
 #' @examples
 #' library(igraph)
 #' g = erdos.renyi.game(100, 120, 'gnm')

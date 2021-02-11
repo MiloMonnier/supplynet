@@ -17,10 +17,10 @@ Description: An extension of igraph package to supply networks. Supply networks
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Imports: fields, igraph, Matrix, methods, raster, reshape2, Rfast, sf, sp,
         stats, spex, stars
-Suggests: DescTools, igraphdata, spData,
+Suggests: DescTools, igraphdata, spData
 NeedsCompilation: no
 Packaged: 2020-05-07 07:35:27 UTC; milo
 Depends: 

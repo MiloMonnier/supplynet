@@ -16,6 +16,8 @@
 #' @return An igraph object with 1 edge rewired.
 #' @export
 #'
+#' @import igraph
+#'
 #' @examples
 #' library(igraph)
 #' g = generateSupplyNet()
@@ -99,6 +101,8 @@ rewireEdge = function(g,
 #' @return An igraph object.
 #' @export
 #'
+#' @import igraph
+#'
 #' @examples
 #' ## Generate a theoretical supply network, define producers (P), intermediaries (I)
 #' ## and distributors (D) vertices.
@@ -111,19 +115,24 @@ rewireEdge = function(g,
 #' plot(g)
 #' ## Swap edges to conserve supply from P to D.
 #' for (i in 1:100) {
-#'   i = ends(g, E(g), names=FALSE)[,1]
-#'   j = ends(g, E(g), names=FALSE)[,2]
-#'   E(g)$type = paste0(V(g)[i]$type, V(g)[j]$type)
-#'   g = swapEdges(g, edges.types="diff")
-#'   if (length(E(g)[which_multiple(g, E(g))]))
-#'      stop("Multiedges")
-#'   if (length(E(g)[which_loop(g, E(g))]))
-#'      stop("Loops")
-#'   if (length(V(g)[degree(g)==0]))
-#'      stop("Isolated vertex")
+#'  i = ends(g, E(g), names=FALSE)[,1]
+#'  j = ends(g, E(g), names=FALSE)[,2]
+#'  E(g)$type = paste0(V(g)[i]$type, V(g)[j]$type)
+#'  g = swapEdges(g, edges.types="diff")
+#'  if (length(E(g)[which_multiple(g, E(g))]))
+#'     stop("Multiedges")
+#'  if (length(E(g)[which_loop(g, E(g))]))
+#'     stop("Loops")
+#'  if (length(V(g)[degree(g)==0]))
+#'     stop("Isolated vertex")
 #' }
 #' plot(g)
 #'
+# es          = E(g)
+# e1          = NULL
+# edges.types = c("random","same","different")
+# multi.edges = FALSE
+
 swapEdges = function(g,
                      es          = E(g),
                      e1          = NULL,
@@ -135,6 +144,7 @@ swapEdges = function(g,
   if (!is.null(e1) && (!is(e1, "igraph.es") || length(e1) != 1))
     stop("e1 require a igraph.es class object of length 1")
   edges.types = match.arg(edges.types)
+  # edges.types = edges.types[3]
   if (edges.types %in% c("same","different")) {
     if (is.null(E(g)$type))
       stop("Require an E(g)$type attribute")
@@ -163,24 +173,27 @@ swapEdges = function(g,
     es = es[!ends(g,es)[,1] %in% ngh_e1]
     es = es[!ends(g,es)[,2] %in% ngh_e1]
   }
-  # Choose random edge e2 into the remaining edge set
+  # Choose random edge e2 to swap with e1 into the remaining edge set 'es'
   if (!length(es)) {
     message(paste("Impossible to swap of edges of", edges.types, "types"))
     return(g)
+  } else if (length(es)==1) {
+    e2 = es
+  } else if (length(es)>1) {
+    e2 = sample(es, 1)
   }
-  e2 = sample(es, 1)
+
   e2ij = ends(g, e2)
   # Swap e1 & e2: delete it and replace by e3 & e4
   e3 = c(e1ij[1], e2ij[2])
   e4 = c(e2ij[1], e1ij[2])
-  g = delete_edges(g, c(e1, e2)) %>%
-    add_edges(c(e3, e4)) %>%
-    updateGraphAttributes()
-  # g = delete_edges(g, c(e1, e2))
-  # e3 = c(e1ij[1], e2ij[2])
-  # e4 = c(e2ij[1], e1ij[2])
-  # g = add_edges(g,  c(e1ij[1], e2ij[2],  c(e1ij[1], e2ij[2])))
-  # g = updateGraphAttributes(g)
+  # print(e1)
+  # print(e2)
+  # print(e3)
+  # print(e4)
+  g = delete_edges(g, c(e1, e2))
+  g = add_edges(g, c(e3, e4))
+  g = updateGraphAttributes(g)
 }
 # TODO Add inter-inter edges ceil ?
 
@@ -203,7 +216,9 @@ swapEdges = function(g,
 #' @return An igraph object with \code{n} more edges.
 #' @export
 #'
+#' @import igraph
 #' @importFrom reshape2 melt
+#'
 #' @examples
 #' ## Generate a theoretical supply network, define producers (P),
 #' ## intermediaries (I) and distributors (D) vertices.
@@ -294,6 +309,8 @@ addRandomEdges = function(g,
 #' @return an igraph object.
 #' @export
 #'
+#' @import igraph
+#'
 #' @examples
 #' library(igraph)
 #' ## Create supply network
@@ -373,6 +390,8 @@ deleteRandomEdges = function(g,
 #' @return an igraph object.
 #' @export
 #'
+#' @importFrom igraph vcount
+#'
 #' @examples
 #' library(igraph)
 #' g = generateSupplyNet()
@@ -426,6 +445,8 @@ adjustAvgDegree = function(g,
 #'
 #' @return an igraph object with 1 less intermediary.
 #' @export
+#'
+#' @importFrom igraph articulation_points
 #'
 #' @examples
 #' library(igraph)

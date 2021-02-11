@@ -26,6 +26,9 @@
 #' @return An igraph.es edge(s) sequence of length \code{n}.
 #' @export
 #'
+#' @importFrom methods is
+#' @importFrom igraph get.edge.attribute
+#'
 #' @examples
 #' library(igraph)
 #' g = erdos.renyi.game(100, 120, 'gnm')

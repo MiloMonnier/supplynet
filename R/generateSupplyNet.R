@@ -13,6 +13,9 @@
 #' @return igraph object; a supply network.
 #' @export
 #'
+#' @importFrom igraph which_loop
+#' @importFrom igraph which_multiple
+#'
 #' @examples
 #' net = generateSupplyNet()
 #' plot(net)
@@ -41,6 +44,5 @@ generateSupplyNet = function(P=67, I=18, D=70, E=228)
   g = delete_edges(g, E(g)[which_loop(g)])
   g = delete_edges(g, E(g)[which_multiple(g)])
   g = updateGraphAttributes(g)
-  return(g)
 }
 
