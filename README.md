@@ -1,10 +1,7 @@
 ## Description
 
-<<<<<<< HEAD
 The supplynet package is dedicated to the assessment of robustness and efficiency metrics of supply networks, including their spatial dimension at multiple scales.
-=======
 The supplynet package is dedicated to the assessment of robustness and efficienc metrics of supply networks, including their spatial dimension at multiple scales.
->>>>>>> dad7c3d3e7ffe8168eedff41162ba92adc65cf97
 
 ## Install
 
