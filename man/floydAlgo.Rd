@@ -8,18 +8,17 @@ floydAlgo(x)
 }
 \arguments{
 \item{x}{An igraph object or a matrix. Matrix values represent the edges cost
-values. If igraph object, it is automatically converted to adjacency
-matrix.}
+values. If igraph object, it is automatically converted to adjacency matrix.}
 }
 \value{
 A matrix m where he elements denote the length of the shortest path
-  between each pair of points. m[i, j] is zero it means there is not any path
-  from i to j, or a cost of 0.
+between each pair of points. m[i, j] is zero it means there is not any path
+from i to j, or a cost of 0.
 }
 \description{
 Based on \code{\link[Rfast]{floyd}} function. If the graph is sparse,
-\code{floyd} seems to use the Johnson algorithm rather than more complex
-Floyd-Warhall algorithm. C++ code difficult to understand:
+\code{floyd} seems to use the Johnson algorithm rather than
+more complex Floyd-Warhall algorithm. C++ code difficult to understand:
 https://github.com/cran/Rfast/blob/master/src/floyd_john.cpp. Adpated to
 Directed Acyclic graph, Floyd-Warshall algorithm is used to apply transitive
 closures.

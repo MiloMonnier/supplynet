@@ -18,8 +18,8 @@ all graph vertices.}
 An igraph object.
 }
 \description{
-Aggregate vertices of an igraph object. For vertices numeric columns, mean of
-groups is computed. For character class columns, uniques values are pasted.
+Aggregate vertices of an igraph object. For vertices numeric columns, mean of groups is computed. For character class
+columns, uniques values are pasted.
 }
 \examples{
 library(igraph)
